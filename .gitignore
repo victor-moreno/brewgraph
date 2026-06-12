@@ -1,2 +1,8 @@
-.cache/
+# Generated output
 brew-deps.html
+
+# Local-only publish helper
+publish.sh
+
+# Hidden local folders (.claude, .cache, ...)
+.*/
