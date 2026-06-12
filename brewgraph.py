@@ -11,7 +11,7 @@ import webbrowser
 OUTPUT = "brew-deps.html"
 
 
-def get_deps():
+def get_deps(no_casks=False):
     # Redirect brew's cache and skip bootsnap: avoids EPERM failures in
     # sandboxed/restricted environments, harmless otherwise.
     env = dict(
@@ -20,8 +20,11 @@ def get_deps():
         HOMEBREW_NO_AUTO_UPDATE="1",
         HOMEBREW_CACHE="/tmp/brewgraph-cache",
     )
+    cmd = ["brew", "deps", "--installed"]
+    if no_casks:
+        cmd.append("--formula")
     result = subprocess.run(
-        ["brew", "deps", "--installed"],
+        cmd,
         capture_output=True, text=True, env=env,
     )
     if result.returncode != 0:
@@ -104,7 +107,7 @@ network.on("click", params => {{
 
 
 def main():
-    deps = get_deps()
+    deps = get_deps(no_casks="--no-casks" in sys.argv)
     nodes, edges = build_graph(deps)
     html = TEMPLATE.format(
         nodes=json.dumps(nodes), edges=json.dumps(edges),

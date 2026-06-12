@@ -3,12 +3,18 @@
 Inspect installed Homebrew packages and draw their dependency graph as an
 interactive HTML page.
 
+![Example dependency graph](example.jpg)
+
 ## Usage
 
 ```sh
 python3 brewgraph.py            # generates brew-deps.html and opens it
 python3 brewgraph.py --no-open  # just generate the file
+python3 brewgraph.py --no-casks # formulae only, exclude casks
 ```
+
+See [brew-deps.html](brew-deps.html) for a generated example (download and
+open locally — GitHub doesn't render HTML in the repo view).
 
 No dependencies beyond Python 3 and Homebrew itself.
 
